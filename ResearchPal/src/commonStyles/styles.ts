@@ -1,7 +1,12 @@
-import styled from 'styled-components/native';
-import Colors from '../utils/colors';
+import styled, { css } from "styled-components/native";
+import Colors from "../utils/colors";
 
 const ImageContainerBoderRadius = 120;
+
+const Font16 = styled.Text`
+  font-size: 16px;
+`;
+
 
 export const CommonImageContainer = styled.View`
   padding: 20px;
@@ -24,4 +29,30 @@ export const Padding28X20 = styled.View`
 
 export const FormContainer = styled.View`
   padding: 12px 4px;
+`;
+
+export const DFlex = css`
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+`;
+
+export const Font16600 = styled(Font16)`
+  font-weight: 600;
+`;
+
+export const Font16400 = styled(Font16)`
+  font-weight: 400;
+`;
+
+export const Font22White = styled(Font22)`
+  color: white;
+  font-weight: 700;
+`;
+
+export const FlexCenter = styled.View`
+  ${DFlex}
+  flex: 1;
+  justify-content: center;
 `;

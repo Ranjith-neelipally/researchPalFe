@@ -1,17 +1,47 @@
-import {View, Text, TextInput} from 'react-native';
-import React from 'react';
-import {CustomInput, IconContainer, InputCompStyles} from './styles';
-import EyeClosed from '../../assets/eyeclosed';
-import PasswordIcon from '../../assets/PasswordIcon';
-
-const Input = () => {
+import React from "react";
+import {
+  CustomInput,
+  IconContainer,
+  InputCompStyles,
+  InputLabel,
+} from "./styles";
+import PasswordIcon from "../../assets/PasswordIcon";
+interface TextInput {
+  password?: boolean;
+  label?: string;
+  onChange?: any;
+  LabelBackgroundColor?: string;
+  placeHolder?: string;
+}
+const Input = ({
+  password,
+  label,
+  onChange,
+  LabelBackgroundColor,
+  placeHolder,
+}: TextInput) => {
   return (
     <InputCompStyles>
-      <IconContainer style={{borderWidth: 1}}>
-        <PasswordIcon />
-      </IconContainer>
+      {password && (
+        <IconContainer>
+          <PasswordIcon />
+        </IconContainer>
+      )}
+      {label && (
+        <InputLabel labelBackgroudColor={LabelBackgroundColor}>
+          {label}
+        </InputLabel>
+      )}
 
-      <CustomInput placeholder="hello" />
+      <CustomInput
+        placeholder={placeHolder ? placeHolder : label}
+        onChangeText={onChange}
+      />
+      {password && (
+        <IconContainer>
+          <PasswordIcon />
+        </IconContainer>
+      )}
     </InputCompStyles>
   );
 };
