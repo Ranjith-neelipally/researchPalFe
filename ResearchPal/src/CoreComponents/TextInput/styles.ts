@@ -4,19 +4,21 @@ import { DFlex } from "../../commonStyles/styles";
 
 interface inputLabelProps {
   labelBackgroudColor?: string;
+  error?: string;
 }
+interface InputCompProps {
+  error?: string;
+}
+export const InputCompStyles = styled.View<InputCompProps>`
+  border: 1px solid ${(props) => (props.error ? "red" : Colors.LightBroderGray)};
 
-export const InputCompStyles = styled.View`
-  border: 1px solid ${Colors.LightBroderGray};
   padding: 12px 8px;
   border-radius: 50px;
   position: relative;
   ${DFlex}
-  margin-bottom: 16px;
 `;
 
 export const CustomInput = styled.TextInput`
-  border: 1px solid;
   color: black;
   font-weight: 600;
   font-size: 14px;
@@ -24,18 +26,15 @@ export const CustomInput = styled.TextInput`
   max-height: 48px;
   padding: 0;
   padding-left: 12px;
-  /* border: 1px solid; */
   flex: 1;
 `;
 
 export const IconContainer = styled.View`
   height: 24px;
   width: 24px;
-  /* border: 1px solid; */
 `;
 
 export const InputLabel = styled.Text<inputLabelProps>`
-  /* background-color: ${Colors.FormLightGreen}; */
   background-color: ${(props) =>
     props.labelBackgroudColor
       ? props.labelBackgroudColor
@@ -44,5 +43,14 @@ export const InputLabel = styled.Text<inputLabelProps>`
   top: -10px;
   left: 28px;
   padding: 0 4px;
+  color: ${(props) => (props.error ? "red" : "black")};
 `;
 
+export const InputCompWrapper = styled.View`
+  margin-bottom: 16px;
+`;
+
+export const ErrorMessage = styled.Text`
+  color: red;
+  padding-left: 12px;
+`;

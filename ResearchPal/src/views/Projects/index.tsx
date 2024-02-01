@@ -1,5 +1,5 @@
-import { Text, ScrollView, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { Text, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   AddBtton,
   Cell,
@@ -9,65 +9,144 @@ import {
   Header,
   ModalStyles,
   Padding20,
+  PaddingTop20,
   ProjectsWrapper,
 } from "./styles";
 import { FlexCenter, Font22, Font22White } from "../../commonStyles/styles";
 import Input from "../../CoreComponents/TextInput";
 import PrimaryButton from "../../CoreComponents/Button";
-import NotesModal from "./TreatmentNotesModal/inedx";
+import NotesModal from "./TreatmentNotesModal";
 import TeritoryButton from "../../CoreComponents/TeritoryButton";
+import Card from "../../CoreComponents/Card";
 
 export default function Projects() {
-  const [isEmpty, setisEmpty] = useState(true);
-  const [newForm, setnewForm] = useState(true);
+  const [isEmpty, setisEmpty] = useState(false);
+  const [newForm, setnewForm] = useState(false);
   const [formData, setFormData] = useState({
     projectTitle: "",
     location: "",
     replications: "",
     treatments: "",
   });
-  const [replications, setreplications] = useState(5);
-  const [Treatents, setTreatents] = useState(5);
+  const [replications, setreplications] = useState(4);
+  const [Treatments, setTreatments] = useState(4);
   const [ContainerWidth, setContainerWidth] = useState(480);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [noteId, setNoteId] = useState("");
-  const [isFormDataAvailable, setisFormDataAvailable] = useState(true);
+  const [errors, setErrors] = useState({
+    projectTitle: "",
+    location: "",
+    replications: "",
+    treatments: "",
+  });
+
+  const [showBackButton, setshowBackButton] = useState(false);
+  const [headerButtonLabel, setHeaderButtonLabel] = useState("");
+
+  const [TreatmentForm, setTreatmentForm] = useState(false);
 
   const Button = () => {
-    console.log("hello");
+    setHeaderButtonLabel("");
+    setErrors({
+      projectTitle: "",
+      location: "",
+      replications: "",
+      treatments: "",
+    });
     setnewForm(!newForm);
+    setshowBackButton(false);
   };
 
-  const SubmitButtton = () => {
-    console.log(formData, "formData");
-    console.log(isFormDataAvailable, "formData");
+  const BackButton = () => {
+    setHeaderButtonLabel("Close");
+    setTreatmentForm(false);
+    setnewForm(true);
+    setshowBackButton(true);
+  };
+
+  const hardClose = () => {
+    setFormData({
+      projectTitle: "",
+      location: "",
+      replications: "",
+      treatments: "",
+    });
+    setnewForm(false);
+    setTreatments(4);
+    setreplications(4);
   };
 
   const CellClickHandler = (id) => {
     console.log("cell clicked", id);
-    setIsModalOpen(true);
-    setNoteId(id);
+    if (TreatmentForm) {
+      setIsModalOpen(true);
+      setNoteId(id);
+    }
+  };
+  const SubmitButtton = () => {
+    let isError = false;
+
+    const newErrors = { ...errors };
+
+    for (const key in formData) {
+      if (!formData[key]) {
+        newErrors[key] = "Please fill in this field.";
+        isError = true;
+      } else {
+        newErrors[key] = "";
+      }
+    }
+
+    setErrors(newErrors);
+
+    if (isError) {
+      console.log("Error: Please fill in all fields.");
+      setHeaderButtonLabel("");
+    } else {
+      console.log(formData, "formData");
+    }
+    setTreatmentForm(true);
+    setHeaderButtonLabel("Back");
   };
 
-  const onChangeEvent = (value) => {
+  const onChangeEvent = (value, field) => {
     setFormData((prevData) => ({
       ...prevData,
-      projectTitle: value,
-      location: value,
-      replications: value,
-      treatments: value,
+      [field]: value,
     }));
 
-    setisFormDataAvailable(true);
+    if (field === "replications") {
+      setreplications(value);
+    }
+
+    if (field === "treatments") {
+      setTreatments(value);
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: value ? "" : "Please fill in this field.",
+    }));
   };
+
+  useEffect(() => {
+    const allFieldsFilled = Object.values(formData).every((val) => val !== "");
+    if (allFieldsFilled && !TreatmentForm && newForm) {
+      setHeaderButtonLabel("Save and Continue");
+    } else if (newForm && !TreatmentForm && !allFieldsFilled) {
+      setHeaderButtonLabel("Close");
+    } else if (TreatmentForm) {
+      setHeaderButtonLabel("Back");
+    } else {
+      setHeaderButtonLabel("");
+    }
+  }, [formData, newForm, TreatmentForm]);
 
   const onContainerLayout = (event) => {
     const { width } = event.nativeEvent.layout;
     setContainerWidth(width);
     console.log("Container width:", width);
   };
-  console.log(replications, "repli");
-  console.log(Treatents, "tret");
 
   const Detains = [
     {
@@ -79,12 +158,12 @@ export default function Projects() {
       value: "location",
     },
     {
-      label: "Replications",
-      value: "replications",
-    },
-    {
       label: "Treatments",
       value: "treatments",
+    },
+    {
+      label: "Replications",
+      value: "replications",
     },
   ];
 
@@ -93,7 +172,18 @@ export default function Projects() {
       <Padding20>
         <Header>
           <Font22White>Projects</Font22White>
-          <TeritoryButton ButtonLable="Save and Continue" />
+          {headerButtonLabel && (
+            <TeritoryButton
+              ButtonLable={headerButtonLabel}
+              onCLick={
+                headerButtonLabel === "Close"
+                  ? Button
+                  : headerButtonLabel === "Back"
+                  ? BackButton
+                  : SubmitButtton
+              }
+            />
+          )}
         </Header>
       </Padding20>
 
@@ -101,13 +191,13 @@ export default function Projects() {
         {isEmpty ? (
           <>
             <FlexCenter>
-              <Font22White>Empty State</Font22White>
+              <Font22White>empty</Font22White>
             </FlexCenter>
           </>
         ) : (
-          <>
-            <Font22White>Available data</Font22White>
-          </>
+          <Flex1 margin={false}>
+            <Card />
+          </Flex1>
         )}
       </>
 
@@ -118,17 +208,41 @@ export default function Projects() {
       {newForm && (
         <>
           <ModalStyles>
-            <ScrollView>
+            <>
               <Flex1>
-                {Detains.map((Item, index) => (
-                  <Input
-                    key={index}
-                    label={Item.label}
-                    onChange={(value) => onChangeEvent(value, Item.label)}
-                  />
-                ))}
-
-                <PrimaryButton onCLick={SubmitButtton} ButtonLable="Submit" />
+                {!TreatmentForm && (
+                  <PaddingTop20>
+                    {Detains.map((Item, index) => (
+                      <Input
+                        key={index}
+                        label={Item.label}
+                        onChange={(value) => onChangeEvent(value, Item.value)}
+                        errorMesssage={errors[Item.value]}
+                        asterisk={true}
+                        value={formData[Item.value]}
+                        type={
+                          Item.value === "replications" ||
+                          Item.value === "treatments"
+                            ? "numeric"
+                            : "default"
+                        }
+                      />
+                    ))}
+                  </PaddingTop20>
+                )}
+                {TreatmentForm && (
+                  <ScrollView>
+                    <View>
+                      <Font22>{formData.projectTitle}</Font22>
+                      {Array.from({ length: Treatments }).map((_, index) => (
+                        <View key={index}>
+                          <Text>{index}</Text>
+                          <Card />
+                        </View>
+                      ))}
+                    </View>
+                  </ScrollView>
+                )}
               </Flex1>
               <Flex1>
                 <CellsContainer onLayout={onContainerLayout}>
@@ -140,7 +254,7 @@ export default function Projects() {
                         borderRadius: 12,
                       }}
                     >
-                      {Array.from({ length: Treatents }).map((_, rowIndex) => (
+                      {Array.from({ length: Treatments }).map((_, rowIndex) => (
                         <FlexRow key={rowIndex}>
                           {Array.from({ length: replications }).map(
                             (_, colIndex) => (
@@ -157,9 +271,11 @@ export default function Projects() {
                                   )
                                 }
                               >
-                                <Text>{`R${rowIndex + 1}, T${
-                                  colIndex + 1
-                                }`}</Text>
+                                {formData && TreatmentForm && (
+                                  <Text>{`R${rowIndex + 1}, T${
+                                    colIndex + 1
+                                  }`}</Text>
+                                )}
                               </Cell>
                             )
                           )}
@@ -169,7 +285,24 @@ export default function Projects() {
                   </ScrollView>
                 </CellsContainer>
               </Flex1>
-            </ScrollView>
+              {showBackButton && !TreatmentForm && (
+                <View
+                  style={{
+                    // maxWidth: "25%",
+                    display: "flex",
+                    // justifyContent: "flex-end",
+                    // borderWidth: 1,
+                    alignItems: "flex-end",
+                    paddingRight: 12,
+                    paddingBottom: 12,
+                  }}
+                >
+                  <View style={{ minWidth: "30%" }}>
+                    <PrimaryButton ButtonLable="Close" onCLick={hardClose} />
+                  </View>
+                </View>
+              )}
+            </>
           </ModalStyles>
           <NotesModal
             isModalOpen={isModalOpen}
@@ -181,9 +314,3 @@ export default function Projects() {
     </ProjectsWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 12,
-  },
-});

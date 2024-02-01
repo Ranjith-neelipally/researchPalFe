@@ -2,6 +2,10 @@ import styled from "styled-components/native";
 import Colors from "../../utils/colors";
 import { DFlex } from "../../commonStyles/styles";
 
+interface Flex1props {
+  margin?: boolean;
+}
+
 const ButtonDimensions = 50;
 const ModalBorderRad = 16;
 const CellDimensions = 60;
@@ -36,14 +40,14 @@ export const ModalStyles = styled.View`
   padding-top: 12px;
   border-radius: ${ModalBorderRad}px ${ModalBorderRad}px 0 0;
 `;
-export const Flex1 = styled.View`
-  margin: 12px;
+export const Flex1 = styled.View<Flex1props>`
+  margin: ${(props) => (props.margin === false ? "0px" : "12px")};
   flex: 1;
 `;
 export const CellsContainer = styled.View`
   /* border: 1px solid; */
   flex: 1;
-  height: 250px;
+  min-height: 250px;
   display: flex;
   padding: 12px;
   flex-direction: column;
@@ -73,4 +77,7 @@ export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+export const PaddingTop20 = styled(Padding20)`
+  padding: 25px 0 0 0;
 `;
