@@ -15,5 +15,5 @@ export const CardWrapperStyles = styled.View`
 export const CardLeftContainer = styled.View`
   background-color: ${Colors.SecondaryColor};
   padding: ${DefaultDimension}px;
-  border-radius: 50%;
+  border-radius: 500px;
 `;
