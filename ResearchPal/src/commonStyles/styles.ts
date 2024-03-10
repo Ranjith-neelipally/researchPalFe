@@ -34,7 +34,6 @@ export const FormContainer = styled.View`
 export const DFlex = css`
   display: flex;
   flex-direction: row;
-  gap: 12px;
   align-items: center;
 `;
 

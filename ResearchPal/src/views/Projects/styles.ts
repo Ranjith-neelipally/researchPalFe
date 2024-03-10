@@ -58,7 +58,6 @@ export const CellsContainer = styled.View`
 export const FlexRow = styled.View`
   display: flex;
   flex-direction: row;
-  flex: 1;
 `;
 
 export const Cell = styled.TouchableOpacity`

@@ -11,7 +11,6 @@ interface InputCompProps {
 }
 export const InputCompStyles = styled.View<InputCompProps>`
   border: 1px solid ${(props) => (props.error ? "red" : Colors.LightBroderGray)};
-
   padding: 12px 8px;
   border-radius: 50px;
   position: relative;
@@ -29,7 +28,7 @@ export const CustomInput = styled.TextInput`
   flex: 1;
 `;
 
-export const IconContainer = styled.View`
+export const IconContainer = styled.Pressable`
   height: 24px;
   width: 24px;
 `;

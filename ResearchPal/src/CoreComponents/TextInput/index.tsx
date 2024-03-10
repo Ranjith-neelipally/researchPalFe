@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   CustomInput,
   ErrorMessage,
@@ -8,8 +8,9 @@ import {
   InputLabel,
 } from "./styles";
 import PasswordIcon from "../../assets/PasswordIcon";
+import EyeClosed from "../../assets/eyeclosed";
+import EyeOpen from "../../assets/eyeopen";
 interface TextInput {
-  password?: boolean;
   label?: string;
   onChange?: any;
   LabelBackgroundColor?: string;
@@ -18,9 +19,11 @@ interface TextInput {
   asterisk?: boolean;
   value?: any;
   type?: any;
+  icon?: any;
+  id?: string;
+  typePassword?: boolean;
 }
 const Input = ({
-  password,
   label,
   onChange,
   LabelBackgroundColor,
@@ -29,15 +32,15 @@ const Input = ({
   asterisk = false,
   value,
   type = "default",
+  icon,
+  id,
+  typePassword,
 }: TextInput) => {
+  const [isPasswordVisable, setisPasswordVisable] = useState(false);
   return (
     <InputCompWrapper>
       <InputCompStyles error={errorMesssage}>
-        {password && (
-          <IconContainer>
-            <PasswordIcon />
-          </IconContainer>
-        )}
+        {icon && <IconContainer>{icon}</IconContainer>}
         {label && (
           <InputLabel
             labelBackgroudColor={LabelBackgroundColor}
@@ -53,10 +56,14 @@ const Input = ({
           onChangeText={onChange}
           value={value}
           keyboardType={type}
+          id={id}
+          secureTextEntry={isPasswordVisable}
         />
-        {password && (
-          <IconContainer>
-            <PasswordIcon />
+        {typePassword && (
+          <IconContainer
+            onPress={() => setisPasswordVisable(!isPasswordVisable)}
+          >
+            {isPasswordVisable ? <EyeClosed /> : <EyeOpen />}
           </IconContainer>
         )}
       </InputCompStyles>
