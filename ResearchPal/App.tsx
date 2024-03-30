@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import AuthenticationNavigator from "./src/AuthNav";
-import MainAppNavigator from "./src/HomeNav";
+import { Provider } from "react-redux";
+import store from "./src/Store/cofigureStore";
+import MainApp from "./src/Main";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   return (
-    <NavigationContainer>
-      {!isAuthenticated ? <MainAppNavigator /> : <AuthenticationNavigator />}
-    </NavigationContainer>
+    <>
+      <Provider store={store}>
+        <MainApp />
+      </Provider>
+    </>
   );
 };
 

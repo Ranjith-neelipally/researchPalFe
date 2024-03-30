@@ -5,6 +5,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import SignUp from "../views/SignUp";
 import SignIn from "../views/Signin";
 import { SafeAreaView as AndroidWrapper } from "react-native-safe-area-context";
+import WelcomeScreen from "../views/WelcomeScreen";
 
 const AuthenticationNavigator = () => {
   const AuthenticationStack = createNativeStackNavigator();
@@ -20,12 +21,16 @@ const AuthenticationNavigator = () => {
     >
       <StatusBar barStyle={"dark-content"} backgroundColor="transparent" />
       <AuthenticationStack.Navigator
-        initialRouteName="SignIn"
+        initialRouteName="WelcomeScreen"
         screenOptions={{
           headerShown: false,
           navigationBarColor: Colors.SecondaryColor,
         }}
       >
+        <AuthenticationStack.Screen
+          name="WelcomeScreen"
+          component={WelcomeScreen}
+        />
         <AuthenticationStack.Screen name="SignUp" component={SignUp} />
         <AuthenticationStack.Screen name="SignIn" component={SignIn} />
       </AuthenticationStack.Navigator>

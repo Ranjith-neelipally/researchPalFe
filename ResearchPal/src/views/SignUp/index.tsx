@@ -75,7 +75,7 @@ const SignUp = ({ navigation }) => {
             (navigation ?? nav).navigate("SignIn");
           }
         } catch (error) {
-          (navigation ?? nav).navigate("SignIn");
+          (navigation ?? nav).navigate("SignUp");
           console.error("Error:", error);
         }
       }

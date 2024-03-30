@@ -4,14 +4,21 @@ import { ButtonLabelText, ButtonStyles } from "./styles";
 import { Font16400 } from "../../commonStyles/styles";
 
 interface ButtonProps {
-  ButtonLable?: string;
+  ButtonLable?: String;
   onCLick?: any;
+  ButtonLableColor?:string;
 }
-const TeritoryButton = ({ ButtonLable = "Click", onCLick }: ButtonProps) => {
+const TeritoryButton = ({
+  ButtonLable = "Click",
+  onCLick,
+  ButtonLableColor,
+}: ButtonProps) => {
   return (
     <>
       <ButtonStyles onPress={onCLick}>
-        <ButtonLabelText>{ButtonLable}</ButtonLabelText>
+        <ButtonLabelText ButtonLableColor={ButtonLableColor}>
+          {ButtonLable}
+        </ButtonLabelText>
       </ButtonStyles>
     </>
   );

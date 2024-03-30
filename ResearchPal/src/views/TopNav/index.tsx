@@ -3,6 +3,9 @@ import React from "react";
 import { ProfilePic, ProfileWrapper, TopNavStyles } from "./styles";
 import ProfileIcon from "../../assets/ProfileIcon";
 import { DFlex, Font16400, Font16600 } from "../../commonStyles/styles";
+import PrimaryButton from "../../CoreComponents/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthState, updateAccessToken } from "../../Store/Auth/Slice";
 
 interface TopNavBarProps {
   image?: string;
@@ -15,6 +18,19 @@ const TopNavBar = ({
   GreetingString = "hello",
   anotherString = "ResearchPal",
 }: TopNavBarProps) => {
+  const dispatch = useDispatch();
+  const handleLogout = useSelector(getAuthState);
+  const Logout = () => {
+    console.log("hello");
+    const accessToken = "";
+    
+    dispatch(
+      updateAccessToken({
+        accessToken,
+        isAccessToken: false,
+      })
+    );
+  };
   return (
     <TopNavStyles>
       <ProfileWrapper>
@@ -39,7 +55,7 @@ const TopNavBar = ({
         </View>
       </ProfileWrapper>
       <View>
-        <Text>settings</Text>
+        <PrimaryButton ButtonLable="Logout" onCLick={() => Logout()} />
       </View>
     </TopNavStyles>
   );

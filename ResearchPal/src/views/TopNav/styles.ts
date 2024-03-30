@@ -5,7 +5,6 @@ export const TopNavStyles = styled.View`
   ${DFlex}
   justify-content: space-between;
   padding: 4px 12px;
-  height: 5.5%;
 `;
 
 export const ProfileWrapper = styled.View`
