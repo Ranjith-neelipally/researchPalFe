@@ -5,6 +5,9 @@ import { DFlex } from "../../commonStyles/styles";
 interface Flex1props {
   margin?: boolean;
 }
+interface FlexRowProps {
+  gap?: number;
+}
 
 const ButtonDimensions = 50;
 const ModalBorderRad = 16;
@@ -31,13 +34,9 @@ export const AddBtton = styled.TouchableOpacity`
 `;
 export const ModalStyles = styled.View`
   background-color: ${Colors.FormLightGreen};
-  position: absolute;
   display: flex;
+  flex: 1;
   flex-direction: column;
-  bottom: 0;
-  height: 90%;
-  width: 100%;
-  padding-top: 12px;
   border-radius: ${ModalBorderRad}px ${ModalBorderRad}px 0 0;
 `;
 export const Flex1 = styled.View<Flex1props>`
@@ -55,9 +54,11 @@ export const CellsContainer = styled.View`
   border-radius: 12px;
 `;
 
-export const FlexRow = styled.View`
+export const FlexRow = styled.View<FlexRowProps>`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: ${(props) => (props.gap ? `${props.gap}px` : "0px")};
 `;
 
 export const Cell = styled.TouchableOpacity`
@@ -79,4 +80,12 @@ export const Header = styled.View`
 `;
 export const PaddingTop20 = styled(Padding20)`
   padding: 25px 0 0 0;
+`;
+
+export const HeaderCard = styled.View`
+  background-color: ${Colors.GreenHeaderColor};
+  padding: 12px;
+  border-radius: 16px;
+  ${DFlex};
+  justify-content: space-between;
 `;

@@ -1,7 +1,7 @@
 import { Text, ScrollView, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
-  AddBtton,
+  AddBtton as AddButton,
   Cell,
   CellsContainer,
   Flex1,
@@ -18,8 +18,11 @@ import PrimaryButton from "../../CoreComponents/Button";
 import NotesModal from "./TreatmentNotesModal";
 import TeritoryButton from "../../CoreComponents/TeritoryButton";
 import Card from "../../CoreComponents/Card";
+import NewProject from "./NewProject";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Projects() {
+export default function Projects({ navigation }: any) {
+  const nav = useNavigation();
   const [isEmpty, setisEmpty] = useState(false);
   const [newForm, setnewForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -167,6 +170,10 @@ export default function Projects() {
     },
   ];
 
+  const handleCardDetails = () => {
+    (navigation ?? nav).navigate("AllNotes");
+  }
+
   return (
     <ProjectsWrapper>
       <Padding20>
@@ -196,14 +203,16 @@ export default function Projects() {
           </>
         ) : (
           <Flex1 margin={false}>
-            <Card />
+            <Card
+              onClick={handleCardDetails}
+            />
           </Flex1>
         )}
       </>
 
-      <AddBtton onPress={Button}>
+      <AddButton onPress={() => (navigation ?? nav).navigate("NewProject")}>
         <Font22>+</Font22>
-      </AddBtton>
+      </AddButton>
 
       {newForm && (
         <>
