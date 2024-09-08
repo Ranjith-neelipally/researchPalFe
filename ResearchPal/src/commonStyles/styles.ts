@@ -12,6 +12,10 @@ const Font16 = styled.Text`
   font-size: 16px;
 `;
 
+const Font14 = styled.Text`
+  font-size: 14px;
+`;
+
 export const CommonImageContainer = styled.View`
   padding: 20px;
   background-color: ${Colors.SecondaryColor};
@@ -45,13 +49,29 @@ export const Font16600 = styled(Font16)`
   font-weight: 600;
 `;
 
+export const Font14600 = styled(Font14)`
+  font-weight: 600;
+`;
+
 export const Font16400 = styled(Font16)`
+  font-weight: 400;
+`;
+
+export const Font14400 = styled(Font14)`
   font-weight: 400;
 `;
 
 export const Font22White = styled(Font22)`
   color: white;
   font-weight: 700;
+`;
+
+export const Font14Danger = styled(Font14)`
+  color: #ff5449;
+`;
+
+export const Font14white = styled(Font14)`
+  color: #ffffff;
 `;
 
 export const FlexCenter = styled.View`

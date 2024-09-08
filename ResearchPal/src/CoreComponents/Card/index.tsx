@@ -1,15 +1,47 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { CardLeftContainer, CardWrapperStyles } from "./styles";
+import {
+  CardLeftContainer,
+  CardWrapperStyles,
+  TouchableCardWrapperStyles,
+} from "./styles";
+import { FlexRow } from "../../views/Projects/styles";
 
-export default function Card() {
+export interface CardProps {
+  identifer?: string;
+  cardTitle?: string | React.ReactNode;
+  children?: React.ReactNode;
+  onClick?: () => void;
+  backgroundColor?: string;
+}
+
+export default function Card({
+  identifer = "T1",
+  cardTitle = "Card",
+  children,
+  onClick,
+  backgroundColor,
+}: CardProps) {
+  const CardWrapper: any = onClick
+    ? TouchableCardWrapperStyles
+    : CardWrapperStyles;
   return (
-    <CardWrapperStyles>
-      <CardLeftContainer>
-        <Text>circle</Text>
-      </CardLeftContainer>
-      <Text>Card</Text>
-      <Text>Icons</Text>
-    </CardWrapperStyles>
+    <>
+      <CardWrapper backgroundColor={backgroundColor} onPress={onClick}>
+        {children ? (
+          children
+        ) : (
+          <>
+            <FlexRow gap={12}>
+              <CardLeftContainer>
+                <Text>{identifer}</Text>
+              </CardLeftContainer>
+              <Text>{cardTitle}</Text>
+            </FlexRow>
+            <Text>Icons</Text>
+          </>
+        )}
+      </CardWrapper>
+    </>
   );
 }

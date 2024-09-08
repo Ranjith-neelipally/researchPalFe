@@ -13,7 +13,7 @@ const MainApp = () => {
   return (
     <>
       <NavigationContainer>
-        {AuthStste.isAccessToken ? (
+        {!AuthStste.isAccessToken ? (
           <MainAppNavigator />
         ) : (
           <AuthenticationNavigator />

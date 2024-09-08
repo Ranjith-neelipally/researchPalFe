@@ -22,6 +22,7 @@ interface TextInput {
   icon?: any;
   id?: string;
   typePassword?: boolean;
+  margin?: string;
 }
 const Input = ({
   label,
@@ -35,10 +36,11 @@ const Input = ({
   icon,
   id,
   typePassword,
+  margin,
 }: TextInput) => {
   const [isPasswordVisable, setisPasswordVisable] = useState(false);
   return (
-    <InputCompWrapper>
+    <InputCompWrapper margin={margin}>
       <InputCompStyles error={errorMesssage}>
         {icon && <IconContainer>{icon}</IconContainer>}
         {label && (

@@ -5,6 +5,7 @@ import { DFlex } from "../../commonStyles/styles";
 interface inputLabelProps {
   labelBackgroudColor?: string;
   error?: string;
+  margin?: string;
 }
 interface InputCompProps {
   error?: string;
@@ -45,8 +46,8 @@ export const InputLabel = styled.Text<inputLabelProps>`
   color: ${(props) => (props.error ? "red" : "black")};
 `;
 
-export const InputCompWrapper = styled.View`
-  margin-bottom: 16px;
+export const InputCompWrapper = styled.View<inputLabelProps>`
+  margin-bottom: ${(props) => (props.margin ? props.margin : "16px")};
 `;
 
 export const ErrorMessage = styled.Text`
